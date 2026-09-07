@@ -1,0 +1,58 @@
+services:
+
+  php:
+    image: php:8.3-apache
+    container_name: php-crud
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+    environment:
+      DB_HOST: mysql
+      DB_USER: amigos
+      DB_PASSWORD: grupo3
+      DB_NAME: crud
+    depends_on:
+      - mysql
+    command: >
+      bash -c "docker-php-ext-install mysqli pdo pdo_mysql &&
+               apache2-foreground"
+    networks:
+      - minha-rede
+
+  mysql:
+    image: mysql:8.4
+    container_name: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: grupo3
+      MYSQL_DATABASE: crud
+      MYSQL_USER: amigos
+      MYSQL_PASSWORD: hermite
+    ports:
+      - "3329:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - minha-rede
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    depends_on:
+      - mysql
+    networks:
+      - minha-rede
+
+volumes:
+  mysql_data:
+
+networks:
+  minha-rede:
+    driver: bridge
