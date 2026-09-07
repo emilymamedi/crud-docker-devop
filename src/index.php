@@ -1,6 +1,6 @@
 <?php
 
-require_once 'conexao.php';
+require 'conexao.php';
 
 $sql = "SELECT * FROM produtos ORDER BY id DESC";
 $stmt = $pdo->query($sql);

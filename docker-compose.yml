@@ -33,6 +33,7 @@ services:
       - "3329:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./banco/banco.sql:/docker-entrypoint-initdb.d/banco.sql
     networks:
       - minha-rede
 
