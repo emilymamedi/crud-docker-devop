@@ -46,12 +46,11 @@ $produtos= $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td><?= $produto['nome'] ?></td>
                         <td><?= $produto['descricao'] ?></td>
                         <td>R$ <?= number_format($produto['preco'], 2, ',', '.') ?></td>
-                        <td><?= $produto['data_cadastro'] ?></td>
                         <td>
-                            <a href="editar.php?id=<?= $produto['id'] ?>">Editar</a>
+                            <a href="editar.php?id=<?= $produto['id'] ?>" class="acao-editar">Editar</a>
                             |
                             <a
-                                href="excluir.php?id=<?= $produto['id'] ?>"
+                                href="excluir.php?id=<?= $produto['id'] ?>" class="acao-excluir"
                                 onclick="return confirm('Tem certeza que deseja excluir este produto?')">
                                 Excluir
                             </a>
