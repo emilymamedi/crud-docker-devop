@@ -10,7 +10,7 @@ services:
     environment:
       DB_HOST: mysql
       DB_USER: amigos
-      DB_PASSWORD: grupo3
+      DB_PASSWORD: hermite
       DB_NAME: crud
     depends_on:
       - mysql
