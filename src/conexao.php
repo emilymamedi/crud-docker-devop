@@ -10,5 +10,3 @@ $pdo = new PDO(
     $usuario,
     $senha
 );
-
-echo "Conectado ao bamco!";
