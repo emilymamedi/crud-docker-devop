@@ -43,49 +43,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <title>Editar Produto</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <h1>Editar Produto</h1>
+    <div class="container">
 
-    <form method="POST">
+        <h1>Editar Produto</h1>
 
-        <label>Nome:</label>
-        <input
-            type="text"
-            name="nome"
-            value="<?= htmlspecialchars($produto['nome']) ?>"
-            required
-        >
+        <form method="POST" class="formulario">
 
-        <br><br>
+            <div class="campo">
+                <label>Nome:</label>
+                <input
+                    type="text"
+                    name="nome"
+                    value="<?= htmlspecialchars($produto['nome']) ?>"
+                    required>
+            </div>
 
-        <label>Descrição:</label>
-        <textarea name="descricao" required><?= htmlspecialchars($produto['descricao']) ?></textarea>
+            <div class="campo">
+                <label>Descrição:</label>
+                <textarea name="descricao" required><?= htmlspecialchars($produto['descricao']) ?></textarea>
 
-        <br><br>
+                <br><br>
+                <div class="campo">
+                    <label>Preço:</label>
+                    <input
+                        type="number"
+                        name="preco"
+                        step="0.01"
+                        value="<?= $produto['preco'] ?>"
+                        required>
+                </div>
+                <br><br>
+                <div class="botoes">
+                    <button type="submit" class="botao botao-amarelo">Salvar alterações</button>
 
-        <label>Preço:</label>
-        <input
-            type="number"
-            name="preco"
-            step="0.01"
-            value="<?= $produto['preco'] ?>"
-            required
-        >
+        </form>
 
-        <br><br>
+        <br>
 
-        <button type="submit">Salvar alterações</button>
+        <a href="index.php" class="voltar">Voltar</a>
 
-    </form>
-
-    <br>
-
-    <a href="index.php">Voltar</a>
-
+    </div>
 </body>
+
 </html>

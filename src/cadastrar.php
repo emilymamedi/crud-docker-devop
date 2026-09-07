@@ -27,38 +27,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <title>Cadastrar Produto</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <h1>Cadastrar Produto</h1>
+    <div class="container">
 
-    <form method="POST">
+        <h1>Cadastrar Produto</h1>
 
-        <label>Nome:</label>
-        <input type="text" name="nome" required>
+        <form method="POST" class="formulario">
 
-        <br><br>
+            <div class="campo">
+                <label>Nome:</label>
+                <input type="text" name="nome" required>
+            </div>
 
-        <label>Descrição:</label>
-        <textarea name="descricao" required></textarea>
+            <div class="campo">
+                <label>Descrição:</label>
+                <textarea name="descricao" required></textarea>
+            </div>
 
-        <br><br>
+            <div class="campo">
+                <label>Preço:</label>
+                <input type="number" name="preco" step="0.01" required>
+            </div>
 
-        <label>Preço:</label>
-        <input type="number" name="preco" step="0.01" required>
+            <div class="botoes">
+                <button type="submit" class="botao">Cadastrar</button>
 
-        <br><br>
+        </form>
 
-        <button type="submit">Cadastrar</button>
+        <br>
 
-    </form>
+        <a href="index.php" class="voltar">Voltar</a>
 
-    <br>
-
-    <a href="index.php">Voltar</a>
+    </div>
 
 </body>
+
 </html>
