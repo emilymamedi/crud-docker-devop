@@ -156,7 +156,7 @@ Aprendemos a utilizar um arquivo SQL para criar automaticamente o banco de dados
 ## Autores
 
 ### Emily Mamedi
-### Nayara Rita**
-### Thiago Duarte**
+### Nayara Rita
+### Thiago Duarte
 
 ---
