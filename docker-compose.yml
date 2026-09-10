@@ -33,30 +33,49 @@ services:  #aqui no serviços a gente vai declarar quantos containers tem na nos
       MYSQL_PASSWORD: hermite #mesma coisa tambem
     ports:
       - "3329:3306" #a 3329 é a porta do computador. estavamos testando e pegamos uma porta vazia
-      #e a 3306 é a do container no docker
+        #e a 3306 é a do container no docker
     volumes: #os dados do banco vao ficar guardadas aqui nos volumes, se apagar so o container, o volume ainda vai ter os nossos dados
+
       - mysql_data:/var/lib/mysql
+
       - ./banco/banco.sql:/docker-entrypoint-initdb.d/banco.sql #esse comando cria as tabelas automatico quando se inicia pela primeira vez
+
     networks:
-      - minha-rede
+
+      - minha-rede #nome da nossa rede :]. pro php, mysql e phpmyadmin se conversarem*
 
   phpmyadmin:
-    image: phpmyadmin:latest
-    container_name: phpmyadmin
-    restart: unless-stopped
+
+    image: phpmyadmin:latest #imagem do phpmyadmin que será utilizada para criar o container*
+
+    container_name: phpmyadmin #nome que demos para o container*
+
+    restart: unless-stopped #se alguma coisa acontecer e o container parar, o docker vai tentar reiniciar dnv*
+
     ports:
-      - "8081:80"
+
+      - "8081:80" #a 8081 é a porta do computador e a 80 é a porta do container*
+
     environment:
-      PMA_HOST: mysql
-      PMA_PORT: 3306
+
+      PMA_HOST: mysql #indica qual container possui o banco de dados*
+
+      PMA_PORT: 3306 #indica a porta do MySQL dentro do container*
+
     depends_on:
-      - mysql
+
+      - mysql #isso diz que o phpmyadmin depende do mysql*
+
     networks:
-      - minha-rede
+
+      - minha-rede #nome da nossa rede :]. pro php, mysql e phpmyadmin se conversarem*
 
 volumes:
-  mysql_data:
+
+  mysql_data: #volume onde ficam guardados os dados do banco*
 
 networks:
-  minha-rede:
-    driver: bridge
+
+  minha-rede: #nome da nossa rede*
+
+    driver: bridge #tipo de rede que permite a comunicação entre os containers*
