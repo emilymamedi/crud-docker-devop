@@ -1,39 +1,42 @@
-services:
+services:  #aqui no serviços a gente vai declarar quantos containers tem na nossa aplicação
+#que sao 3. o php, o mysql e o phpmyadmin
 
   php:
-    image: php:8.3-apache
-    container_name: php-crud
+    image: php:8.3-apache #a imagem é como um modelo pronto pro docker criar seu container
+    #o "php:8.3-apache" é que o php ta na versao 8.3 e o apache q vai executar os arquivos.php
+    container_name: php-crud #nome q a gente deu pro container
     ports:
-      - "8080:80"
-    volumes:
+      - "8080:80"  #numero da porta, a porta 80 é padrao do apache e a 8080 é a do meu computador
+    volumes: 
       - ./src:/var/www/html
-    environment:
-      DB_HOST: mysql
-      DB_USER: amigos
-      DB_PASSWORD: hermite
-      DB_NAME: crud
+    environment: #aqui dentro ficam os dados pra entrar no phpmyadmin
+      DB_HOST: mysql #é o nome do banco
+      DB_USER: amigos #é o nosso nome de usuario
+      DB_PASSWORD: hermite #a senha
+      DB_NAME: crud #nome da tabela
     depends_on:
-      - mysql
-    command: >
+      - mysql #isso diz que o php depende do mysql :] rs
+    command: #esse comandoinstala o mysqli, o pdo e o pdo_mysqli>
       bash -c "docker-php-ext-install mysqli pdo pdo_mysql &&
-               apache2-foreground"
+               apache2-foreground" 
     networks:
-      - minha-rede
+      - minha-rede #nome da nossa rede :]. pro php, mysql e phpmyadmin se conversarem
 
-  mysql:
-    image: mysql:8.4
-    container_name: mysql
-    restart: unless-stopped
+  mysql: #segundo serviço
+    image: mysql:8.4 
+    container_name: mysql #o mesmo nome pro php encontrar o banco de dados
+    restart: unless-stopped #se alguma coisa acontecer e o container parar, o docker vai tentar reiniciar dnv
     environment:
-      MYSQL_ROOT_PASSWORD: grupo3
-      MYSQL_DATABASE: crud
-      MYSQL_USER: amigos
-      MYSQL_PASSWORD: hermite
+      MYSQL_ROOT_PASSWORD: grupo3 #a senha do adm
+      MYSQL_DATABASE: crud #nome do banco de dados, o mesmo que esta la encima
+      MYSQL_USER: amigos #mesma coisa lá de cima
+      MYSQL_PASSWORD: hermite #mesma coisa tambem
     ports:
-      - "3329:3306"
-    volumes:
+      - "3329:3306" #a 3329 é a porta do computador. estavamos testando e pegamos uma porta vazia
+      #e a 3306 é a do container no docker
+    volumes: #os dados do banco vao ficar guardadas aqui nos volumes, se apagar so o container, o volume ainda vai ter os nossos dados
       - mysql_data:/var/lib/mysql
-      - ./banco/banco.sql:/docker-entrypoint-initdb.d/banco.sql
+      - ./banco/banco.sql:/docker-entrypoint-initdb.d/banco.sql #esse comando cria as tabelas automatico quando se inicia pela primeira vez
     networks:
       - minha-rede
 
