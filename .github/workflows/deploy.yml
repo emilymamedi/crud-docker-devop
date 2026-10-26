@@ -1,0 +1,24 @@
+name: Deploy CRUD
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checando a versão mais nova do código
+        run: |
+          cd /home/amigas/amigas/crud-docker-devop
+          git pull origin main
+
+      - name: Descendo a versão anterior
+        run: |
+          cd /home/amigas/amigas/crud-docker-devop
+          docker compose down
+
+      - name: Subindo versão mais nova
+        run: |
+          cd /home/amigas/amigas/crud-docker-devop
+          docker compose up -d --build
