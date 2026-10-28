@@ -1,3 +1,105 @@
+# — CRUD com Docker e Deploy Automático
+
+## Alunas
+
+- **Emily Mamedi Gonçalves** [RA:250358]
+- **Nayara Rita Macedo Amador** [RA:250357]
+
+## 1. Descrição do projeto
+
+O projeto CRUD com Docker e Deploy Automático consiste em uma aplicação CRUD que permite realizar operações de cadastro, consulta, atualização e exclusão de registros. A aplicação utiliza PHP e Apache para o funcionamento da interface web, MySQL para o armazenamento dos dados e Docker Compose para gerenciar os contêineres.
+
+Além disso, o projeto conta com um processo de deploy automático utilizando GitHub Actions e um Runner local (self-hosted runner) instalado em uma máquina virtual Ubuntu Server. Dessa forma, quando alterações são enviadas para a branch main do repositório, o workflow é acionado e atualiza a aplicação na máquina virtual, automatizando o processo de implantação.
+
+O projeto integra, portanto, o desenvolvimento de uma aplicação web com conteinerização, versionamento de código e automação de deploy.
+
+## 2. Tecnologias utilizadas
+
+- Ubuntu Server
+- VirtualBox
+- Docker
+- Docker Compose
+- PHP com Apache
+- MySQL 
+- phpMyAdmin
+- Git e GitHub
+- GitHub Actions
+- Self-hosted Runner
+
+## 3. Funcionamento do Runner local
+
+O Runner local é instalado na máquina virtual Ubuntu Server e permite executar os workflows do GitHub Actions diretamente nessa máquina.
+
+Quando uma execução é iniciada, o Runner recebe as tarefas definidas no workflow e executa os comandos necessários para atualizar e reiniciar a aplicação.
+
+## 4. Deploy automático
+
+O deploy automático está configurado no arquivo `.github/workflows/deploy.yml`.
+
+Quando uma alteração é enviada para a branch `main`, o GitHub Actions inicia o workflow, que executa as seguintes etapas:
+
+1. Atualiza o código com `git pull origin main`.
+2. Para os contêineres anteriores com `docker compose down`.
+3. Reconstrói e inicia os serviços com `docker compose up -d --build`.
+
+Assim, a aplicação é atualizada automaticamente na máquina virtual.
+
+## 5. Como acessar a aplicação
+
+### Aplicação CRUD
+
+http://localhost:8080
+
+### phpMyAdmin
+
+http://localhost:8081
+
+Esses endereços funcionam no computador hospedeiro quando o redirecionamento de portas do VirtualBox está configurado corretamente.
+
+## 6. Como executar o projeto
+
+Entre no diretório do projeto:
+
+```bash
+cd /home/amigas/crud-docker-devop
+```
+
+Atualize o código:
+
+```bash
+git pull origin main
+```
+
+Inicie os serviços:
+
+```bash
+docker compose up -d --build
+```
+
+Verifique os contêineres:
+
+```bash
+docker compose ps
+```
+
+## 7. Verificação do deploy
+
+Para verificar o funcionamento do deploy automático:
+
+1. Faça uma alteração no código.
+2. Envie a alteração para a branch `main`.
+3. Acesse a aba **Actions** do GitHub.
+4. Confira se o workflow foi executado com sucesso.
+5. Acesse a aplicação para verificar a atualização.
+
+## 8. Repositório
+
+https://github.com/emilymamedi/crud-docker-devop
+
+## 9. Conclusão
+
+O projeto Amigas utiliza Docker para executar uma aplicação web e seus serviços, além do GitHub Actions e de um Runner local para automatizar o deploy. Dessa forma, as alterações enviadas ao repositório podem ser implantadas na máquina virtual de maneira prática e organizada.
+
 # Cadastro de Produtos
 
 Projeto desenvolvido para o gerenciamento de produtos por meio de uma aplicação web utilizando **PHP, MySQL, Docker Compose e phpMyAdmin**.
