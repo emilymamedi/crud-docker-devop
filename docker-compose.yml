@@ -21,6 +21,12 @@ services:  #aqui no serviços a gente vai declarar quantos containers tem na nos
                apache2-foreground" 
     networks:
       - minha-rede #nome da nossa rede :]. pro php, mysql e phpmyadmin se conversarem
+      healthcheck:
+  test: ["CMD", "php", "-r", "$$s=@fsockopen('127.0.0.1',80); exit($$s?0:1);"]
+  interval: 10s
+  timeout: 5s
+  retries: 10
+  start_period: 20s
 
   mysql: #segundo serviço
     image: mysql:8.4 
@@ -35,6 +41,12 @@ services:  #aqui no serviços a gente vai declarar quantos containers tem na nos
       - "3329:3306" #a 3329 é a porta do computador. estavamos testando e pegamos uma porta vazia
         #e a 3306 é a do container no docker
     volumes: #os dados do banco vao ficar guardadas aqui nos volumes, se apagar so o container, o volume ainda vai ter os nossos dados
+    healthcheck:
+  test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p$${MYSQL_ROOT_PASSWORD} --silent"]
+  interval: 10s
+  timeout: 5s
+  retries: 10
+  start_period: 30s
 
       - mysql_data:/var/lib/mysql
 
@@ -57,6 +69,7 @@ services:  #aqui no serviços a gente vai declarar quantos containers tem na nos
       - "8081:80" #a 8081 é a porta do computador e a 80 é a porta do container*
 
     environment:
+    
 
       PMA_HOST: mysql #indica qual container possui o banco de dados*
 
@@ -71,6 +84,12 @@ services:  #aqui no serviços a gente vai declarar quantos containers tem na nos
       - minha-rede #nome da nossa rede :]. pro php, mysql e phpmyadmin se conversarem*
 
 volumes:
+healthcheck:
+  test: ["CMD", "php", "-r", "$$s=@fsockopen('127.0.0.1',80); exit($$s?0:1);"]
+  interval: 10s
+  timeout: 5s
+  retries: 10
+  start_period: 20s
 
   mysql_data: #volume onde ficam guardados os dados do banco*
 
