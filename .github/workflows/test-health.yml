@@ -1,0 +1,52 @@
+
+name: Teste de Saúde dos Containers
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixando o código
+        uses: actions/checkout@v4
+
+      - name: Verificando Docker
+        run: |
+          docker --version
+          docker compose version
+
+      - name: Subindo os containers
+        run: |
+          docker compose up -d --build
+
+      - name: Aguardando os containers ficarem saudáveis
+        run: |
+          for i in {1..30}; do
+            docker compose ps
+            if [ "$(docker compose ps --status running -q | wc -l)" -ge 3 ] &&
+               [ "$(docker compose ps --status running -q | xargs -r docker inspect --format '{{.State.Health.Status}}' | grep -c '^healthy$')" -eq 3 ]; then
+              echo "Todos os containers estão saudáveis!"
+              exit 0
+            fi
+            sleep 10
+          done
+
+          echo "Erro: nem todos os containers ficaram saudáveis."
+          docker compose ps
+          docker compose logs
+          exit 1
+
+      - name: Testando acesso HTTP
+        run: |
+          curl --fail http://localhost:8080
+          curl --fail http://localhost:8081
+
+      - name: Encerrando ambiente de teste
+        if: always()
+        run: |
+          docker compose down
